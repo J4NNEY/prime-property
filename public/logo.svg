@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" fill="none">
+  <!-- Building mark: stacked angular shapes -->
+  <g>
+    <!-- Gold stripe (left) -->
+    <path d="M8 60 L18 22 L24 22 L18 60 Z" fill="#C9A961"/>
+    <!-- Red stripe (middle-left) -->
+    <path d="M22 60 L32 22 L38 22 L34 60 Z" fill="#B33A3A"/>
+    <!-- Dark angular building shape -->
+    <path d="M36 60 L46 14 L62 14 L62 60 Z M46 22 L58 22 L58 30 L50 30 Z" fill="#1A1A1A"/>
+    <!-- Right vertical bar -->
+    <path d="M60 60 L60 14 L66 14 L66 60 Z" fill="#1A1A1A"/>
+  </g>
+
+  <!-- "PRIME" text -->
+  <text x="80" y="42" font-family="Inter, sans-serif" font-size="22" font-weight="800" fill="#1A1A1A" letter-spacing="2">PRIME</text>
+
+  <!-- "PROPERTY" with dashes -->
+  <line x1="80" y1="56" x2="92" y2="56" stroke="#1A1A1A" stroke-width="1.2"/>
+  <text x="96" y="60" font-family="Inter, sans-serif" font-size="9" font-weight="500" fill="#1A1A1A" letter-spacing="3">PROPERTY</text>
+  <line x1="160" y1="56" x2="172" y2="56" stroke="#1A1A1A" stroke-width="1.2"/>
+</svg>
