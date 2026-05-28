@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -19,6 +20,8 @@ model User {
 
   properties Property[]
   auditLogs  AuditLog[]
+
+  @@index([email])
 }
 
 model Property {
@@ -43,19 +46,25 @@ model Property {
   createdBy    String
   creator      User     @relation(fields: [createdBy], references: [id])
 
-  auditLogs AuditLog[]
+  @@index([deletedAt])
+  @@index([status])
+  @@index([tipe])
+  @@index([kawasan])
+  @@index([createdAt])
 }
 
 model AuditLog {
   id         String   @id @default(cuid())
   action     String   // create | update | delete | restore
   entityType String   // property | user
-  entityId   String
+  entityId   String   // polymorphic: id Property atau User (tanpa FK)
   changes    String?  // JSON string of changes
   userId     String
   user       User     @relation(fields: [userId], references: [id])
-  property   Property? @relation(fields: [entityId], references: [id])
   createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
 }
 
 model ContactMessage {

@@ -32,18 +32,18 @@ export async function GET(request: NextRequest) {
 
     if (search) {
       where.OR = [
-        { namaProperty: { contains: search } },
-        { group: { contains: search } },
-        { kawasan: { contains: search } },
+        { namaProperty: { contains: search, mode: "insensitive" } },
+        { group: { contains: search, mode: "insensitive" } },
+        { kawasan: { contains: search, mode: "insensitive" } },
       ];
     }
 
     if (kawasan) {
-      where.kawasan = { contains: kawasan };
+      where.kawasan = { contains: kawasan, mode: "insensitive" };
     }
 
     if (hadap) {
-      where.hadap = { contains: hadap };
+      where.hadap = { contains: hadap, mode: "insensitive" };
     }
 
     if (tipe) {

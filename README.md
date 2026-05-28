@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prime Property
 
-## Getting Started
+Next.js + Prisma + Supabase Postgres.
 
-First, run the development server:
+## Setup Database (Supabase)
+
+1. Buat project baru di [supabase.com](https://supabase.com).
+2. Di dashboard Supabase: **Project Settings → Database → Connection string**.
+3. Copy dua connection string ke `.env`:
+   - `DATABASE_URL` → mode **Transaction pooler** (port `6543`). Tambahkan `?pgbouncer=true&connection_limit=1` di akhir URL.
+   - `DIRECT_URL` → mode **Session** atau direct (port `5432`). Hanya dipakai oleh Prisma migrate / db push.
+4. Lihat `.env.example` untuk format lengkap.
+
+## Setup Awal
 
 ```bash
+npm install
+npm run db:setup     # push schema ke Supabase + seed data
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script              | Fungsi                                          |
+| ------------------- | ----------------------------------------------- |
+| `npm run dev`       | Jalankan Next.js dev server                     |
+| `npm run build`     | Build production                                |
+| `npm run db:generate` | Generate Prisma Client                        |
+| `npm run db:push`   | Sync schema ke Supabase (no migration history)  |
+| `npm run db:migrate` | Buat & apply migration baru (dev)              |
+| `npm run db:seed`   | Seed user + 50 dummy properties                 |
+| `npm run db:setup`  | `db:push` + `db:seed`                           |
+| `npm run db:studio` | Buka Prisma Studio                              |
 
-## Learn More
+## Login Default (setelah seed)
 
-To learn more about Next.js, take a look at the following resources:
+| Role       | Email                            | Password        |
+| ---------- | -------------------------------- | --------------- |
+| Superadmin | superadmin@primeproperty.id      | superadmin123   |
+| Admin      | admin@primeproperty.id           | admin123        |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **Penting:** Ganti password ini di production, dan ganti `JWT_SECRET` di `.env` dengan random string yang panjang.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 16 (App Router)
+- React 19
+- Prisma 5 + Supabase Postgres
+- TailwindCSS 4
+- JWT auth via httpOnly cookie
